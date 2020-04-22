@@ -7,7 +7,7 @@ import (
 )
 
 func TestCsv(t *testing.T) {
-	csv, err := New("F:\\test\\test.csv", "GBK")
+	csv, err := New("test.csv", "GBK")
 	if err != nil {
 		t.Error(err)
 	}
@@ -16,4 +16,7 @@ func TestCsv(t *testing.T) {
 		t.Error(err)
 	}
 	fmt.Println(s)
+	fmt.Println(csv.String(1, 0))
+	fmt.Println(csv.Float(1, 1))
+	fmt.Println(csv.Int(1, 2))
 }

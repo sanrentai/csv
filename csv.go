@@ -8,6 +8,7 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
+	"strconv"
 	"strings"
 
 	"golang.org/x/text/encoding"
@@ -18,7 +19,6 @@ import (
 type Csv [][]string
 
 func (csv Csv) Find(row, col int) (string, error) {
-	fmt.Println(len(csv))
 	if len(csv) <= row {
 		return "", errors.New("error row")
 	}
@@ -26,6 +26,26 @@ func (csv Csv) Find(row, col int) (string, error) {
 		return "", errors.New("error col")
 	}
 	return strings.TrimSpace(csv[row][col]), nil
+}
+
+func (csv Csv) String(row, col int) (string, error) {
+	return csv.Find(row, col)
+}
+
+func (csv Csv) Float(row, col int) (float64, error) {
+	str, err := csv.Find(row, col)
+	if err != nil {
+		return 0, err
+	}
+	return strconv.ParseFloat(str, 64)
+}
+
+func (csv Csv) Int(row, col int) (int, error) {
+	str, err := csv.Find(row, col)
+	if err != nil {
+		return 0, err
+	}
+	return strconv.Atoi(str)
 }
 
 func New(filename, charset string) (Csv, error) {
