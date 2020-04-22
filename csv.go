@@ -48,6 +48,14 @@ func (csv Csv) Int(row, col int) (int, error) {
 	return strconv.Atoi(str)
 }
 
+func (csv Csv) Int64(row, col int) (int64, error) {
+	str, err := csv.Find(row, col)
+	if err != nil {
+		return 0, err
+	}
+	return strconv.ParseInt(str, 10, 64)
+}
+
 func New(filename, charset string) (Csv, error) {
 	csv := make(Csv, 0)
 	fs, err := os.Open(filename)
